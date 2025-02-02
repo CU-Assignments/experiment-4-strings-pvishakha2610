@@ -1,0 +1,45 @@
+1. Given two strings s and goal, return true if and only if s can become goal after some number of shifts on s. A shift on s consists of moving the leftmost character of s to the rightmost position.
+class Solution {
+    public boolean rotateString(String s, String goal) {
+        if (s.length() != goal.length()) return false;
+        return (s + s).contains(goal);
+    }
+    
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        System.out.println(solution.rotateString("abcde", "cdeab"));
+        System.out.println(solution.rotateString("abcde", "abced"));
+    }
+}
+
+2.Given an array of strings queries and a string pattern, return a boolean array answer where answer[i] is true if queries[i] matches pattern, and false otherwise.
+
+A query word queries[i] matches pattern if you can insert lowercase English letters into the pattern so that it equals the query. You may insert a character at any position in pattern or you may choose not to insert any characters at all.
+import java.util.*;
+
+public class CamelCaseMatching {
+    public static List<Boolean> camelMatch(String[] queries, String pattern) {
+        List<Boolean> result = new ArrayList<>();
+        for (String query : queries) {
+            result.add(matches(query, pattern));
+        }
+        return result;
+    }
+
+    private static boolean matches(String query, String pattern) {
+        int i = 0;
+        for (char c : query.toCharArray()) {
+            if (i < pattern.length() && c == pattern.charAt(i)) {
+                i++;
+            } else if (Character.isUpperCase(c)) {
+                return false;
+            }
+        }
+        return i == pattern.length();
+    }
+
+    public static void main(String[] args) {
+        String[] queries = {"FooBar","FooBarTest","FootBall","FrameBuffer","ForceFeedBack"};
+        String pattern = "FB";
+        System.out.println(camelMatch(queries, pattern));
+    }
